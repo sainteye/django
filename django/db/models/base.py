@@ -77,6 +77,15 @@ class ModelBase(type):
         # Create the class.
         module = attrs.pop('__module__')
         new_class = super_new(cls, name, bases, {'__module__': module})
+        # <========== THE CODE BELLOW SHOULD BE ADDED ONLY ======>>
+
+        new_attrs = {'__module__': module}
+        classcell = attrs.pop('__classcell__', None)
+        if classcell is not None:
+            new_attrs['__classcell__'] = classcell
+        new_class = super_new(cls, name, bases, new_attrs)
+
+        # <========== THE CODE ABOVE SHOULD BE ADDED ONLY ======>>
         attr_meta = attrs.pop('Meta', None)
         abstract = getattr(attr_meta, 'abstract', False)
         if not attr_meta:
