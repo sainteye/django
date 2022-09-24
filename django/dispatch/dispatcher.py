@@ -95,10 +95,10 @@ class Signal(object):
             # it is -- we don't want to prevent registration of valid but weird
             # callables.
             try:
-                argspec = inspect.getargspec(receiver)
+                argspec = inspect.signature(receiver)
             except TypeError:
                 try:
-                    argspec = inspect.getargspec(receiver.__call__)
+                    argspec = inspect.signature(receiver.__call__)
                 except (TypeError, AttributeError):
                     argspec = None
             if argspec:

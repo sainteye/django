@@ -47,7 +47,7 @@ def module_has_submodule(package, module_name):
         # a package (module with a __path__), so if it's not, then bail here.
         return False
     for finder in sys.meta_path:
-        if finder.find_module(name, package_path):
+        if finder.find_spec(name, package_path):
             return True
     for entry in package_path:
         try:
