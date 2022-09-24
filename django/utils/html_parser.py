@@ -9,7 +9,8 @@ use_workaround = (
     (current_version >= (3, 0) and current_version < (3, 2, 3))
 )
 
-HTMLParseError = _html_parser.HTMLParseError
+# HTMLParseError = _html_parser.HTMLParseError
+HTMLParseError = Exception
 
 if not use_workaround:
     HTMLParser = _html_parser.HTMLParser
