@@ -5,6 +5,7 @@ from django.dispatch import saferef
 from django.utils.six.moves import xrange
 
 
+
 WEAKREF_TYPES = (weakref.ReferenceType, saferef.BoundMethodWeakref)
 
 
@@ -87,6 +88,11 @@ class Signal(object):
         # If DEBUG is on, check that we got a good receiver
         if settings.configured and settings.DEBUG:
             import inspect
+            import six
+            if six.PY3:
+                getargspec = inspect.getfullargspec
+            else:
+                getargspec = inspect.getargspec
             assert callable(receiver), "Signal receivers must be callable."
 
             # Check for **kwargs
@@ -95,10 +101,10 @@ class Signal(object):
             # it is -- we don't want to prevent registration of valid but weird
             # callables.
             try:
-                argspec = inspect.getfullargspec(receiver)
+                argspec = getargspec(receiver)
             except TypeError:
                 try:
-                    argspec = inspect.getfullargspec(receiver.__call__)
+                    argspec = getargspec(receiver.__call__)
                 except (TypeError, AttributeError):
                     argspec = None
             if argspec:
