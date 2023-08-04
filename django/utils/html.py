@@ -115,10 +115,11 @@ linebreaks = allow_lazy(linebreaks, six.text_type)
 
 class MLStripper(HTMLParser):
     def __init__(self):
-        if six.PY2:
-            HTMLParser.__init__(self)
-        else:
-            HTMLParser.__init__(self, strict=False)
+        # if six.PY2:
+        #     HTMLParser.__init__(self)
+        # else:
+        #     HTMLParser.__init__(self, strict=False)
+        HTMLParser.__init__(self)
         self.reset()
         self.fed = []
     def handle_data(self, d):
